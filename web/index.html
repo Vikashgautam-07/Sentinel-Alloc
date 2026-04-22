@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Memory Allocator - Visual Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>Memory Allocator Dashboard</h1>
+                <p class="subtitle">Real-time Heap Visualization & Management</p>
+            </div>
+            <div class="status-indicator">
+                <span class="status-dot" id="statusDot"></span>
+                <span id="statusText">Connecting...</span>
+            </div>
+        </header>
+
+        <!-- Control Panel -->
+        <div class="control-panel">
+            <div class="control-section">
+                <h2>Allocation Strategy</h2>
+                <div class="radio-group">
+                    <label><input type="radio" name="strategy" value="best_fit" checked> Best Fit</label>
+                    <label><input type="radio" name="strategy" value="first_fit"> First Fit</label>
+                </div>
+            </div>
+
+            <div class="control-section">
+                <h2>Allocate Memory</h2>
+                <div class="input-group">
+                    <input type="number" id="allocateSize" placeholder="Size (bytes)" min="1" max="4096" value="256">
+                    <button id="mallocBtn" class="btn btn-primary">Allocate</button>
+                </div>
+            </div>
+
+            <div class="control-section">
+                <h2>Free Memory</h2>
+                <div class="input-group">
+                    <input type="text" id="freeAddress" placeholder="Address (0x...)">
+                    <button id="freeBtn" class="btn btn-danger">Free</button>
+                </div>
+            </div>
+
+            <div class="control-section">
+                <h2>Heap Management</h2>
+                <button id="resetBtn" class="btn btn-warning">Reset Heap</button>
+                <button id="verifyBtn" class="btn btn-info">Verify Integrity</button>
+            </div>
+
+            <div class="control-section">
+                <h2>Refresh Rate</h2>
+                <select id="refreshRate">
+                    <option value="1000">1 second</option>
+                    <option value="2000">2 seconds</option>
+                    <option value="5000" selected>5 seconds</option>
+                    <option value="10000">10 seconds</option>
+                </select>
+                <label class="checkbox">
+                    <input type="checkbox" id="autoRefresh" checked>
+                    Auto Refresh
+                </label>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Heap Visualization -->
+            <section class="section">
+                <h2>Heap Memory Map</h2>
+                <div id="heapVisualization" class="heap-visualization">
+                    <!-- Memory blocks will be rendered here -->
+                </div>
+                <div class="visualization-legend">
+                    <div class="legend-item">
+                        <div class="legend-color allocated"></div>
+                        <span>Allocated</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color free"></div>
+                        <span>Free</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Statistics -->
+            <section class="section stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Total Size</div>
+                    <div class="stat-value" id="totalSize">0 B</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Allocated</div>
+                    <div class="stat-value allocated-text" id="allocatedSize">0 B</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Free</div>
+                    <div class="stat-value free-text" id="freeSize">0 B</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Utilization</div>
+                    <div class="stat-value" id="utilization">0%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Active Allocations</div>
+                    <div class="stat-value" id="numAllocations">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Blocks</div>
+                    <div class="stat-value" id="numBlocks">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Fragmentation</div>
+                    <div class="stat-value" id="fragmentation">0%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Failed Allocations</div>
+                    <div class="stat-value error-text" id="failedAllocations">0</div>
+                </div>
+            </section>
+
+            <!-- Block Details -->
+            <section class="section">
+                <h2>Memory Blocks</h2>
+                <div class="table-container">
+                    <table id="blocksTable" class="blocks-table">
+                        <thead>
+                            <tr>
+                                <th>Address</th>
+                                <th>Size (bytes)</th>
+                                <th>Status</th>
+                                <th>Utilization %</th>
+                            </tr>
+                        </thead>
+                        <tbody id="blocksList">
+                            <!-- Block rows will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Alerts -->
+            <section class="section">
+                <div id="alertContainer" class="alert-container">
+                    <!-- Alerts will be inserted here -->
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Custom Memory Allocator | Thread-Safe Implementation | REST API Backend</p>
+        <p>API Endpoint: <code id="apiEndpoint">http://localhost:8081</code></p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

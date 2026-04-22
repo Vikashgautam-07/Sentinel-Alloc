@@ -1,0 +1,17 @@
+# Build artifacts
+build/
+bin/
+obj/
+*.o
+*.out
+
+# Executables
+allocator_server
+test_malloc
+
+# IDE files
+.vscode/
+.idea/
+
+# OS junk
+.DS_Store
